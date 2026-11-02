@@ -41,19 +41,19 @@
             0% { opacity: 0; }
             10% { opacity: 1; }
             90% { opacity: 1; }
-            100% { opacity: 0; } /* Disparaît à la fin de ses 3s */
+            100% { opacity: 0; }
         }
 
         @keyframes sequence-texte {
             0% { opacity: 0; }
             10% { opacity: 1; }
             90% { opacity: 1; }
-            100% { opacity: 0; } /* Disparaît à la fin de ses 4s */
+            100% { opacity: 0; }
         }
 
-        @keyframes sequence-bouton {
+        @keyframes apparition-permanente {
             0% { opacity: 0; }
-            100% { opacity: 1; } /* Reste affiché pour le clic */
+            100% { opacity: 1; } /* Reste affiché pour toujours */
         }
 
         /* ÉTAPE 1 : Le titre (0 à 3 secondes) */
@@ -69,8 +69,8 @@
             animation: sequence-titre 3s ease-in-out forwards;
         }
 
-        /* ÉTAPE 2 : Le texte (3 à 7 secondes) */
-        .texte-neo {
+        /* ÉTAPE 2 : Le texte central (3 à 7 secondes) */
+        .texte-neo-centre {
             position: absolute;
             bottom: 5vh;
             left: 50%;
@@ -85,7 +85,6 @@
             border-radius: 10px;
             text-align: center;
             opacity: 0;
-            /* Attend 3s, puis joue pendant 4s */
             animation: sequence-texte 4s ease-in-out 3s forwards; 
         }
 
@@ -112,13 +111,31 @@
             transition: 0.3s;
             
             opacity: 0;
-            /* Attend 7s (3+4), puis joue pendant 2s et reste fixe */
-            animation: sequence-bouton 2s ease-in-out 7s forwards;
+            animation: apparition-permanente 2s ease-in-out 7s forwards;
         }
 
         .bouton-acces:hover {
             background-color: #ffffff;
             box-shadow: 0 0 40px #ffffff;
+        }
+
+        /* ÉTAPE 4 : Le texte de rappel (20 secondes et plus, en bas à gauche) */
+        .texte-neo-discret {
+            position: absolute;
+            bottom: 5vh;
+            left: 3vw; /* Calé à gauche */
+            width: 80%;
+            max-width: 350px; /* Plus étroit */
+            font-size: 0.85rem; /* Plus petit */
+            line-height: 1.4;
+            text-shadow: 0 0 5px #00FF41;
+            background: rgba(0, 0, 0, 0.4); /* Fond plus léger */
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 2px solid #00FF41; /* Petite touche esthétique */
+            opacity: 0;
+            /* Attend 20 secondes, puis apparaît doucement en 2 secondes */
+            animation: apparition-permanente 2s ease-in-out 20s forwards;
         }
 
         @media (max-width: 768px) {
@@ -129,7 +146,8 @@
                 right: 50%;
                 transform: translateX(50%);
             }
-            .texte-neo { bottom: 2vh; font-size: 1rem; }
+            .texte-neo-centre { bottom: 2vh; font-size: 1rem; }
+            .texte-neo-discret { bottom: 2vh; left: 50%; transform: translateX(-50%); font-size: 0.75rem; text-align: center; border-left: none; border-top: 2px solid #00FF41;}
         }
     </style>
 </head>
@@ -141,7 +159,13 @@
     
     <div class="interface">
         <h1 class="titre-intro">Bienvenue dans La Matrice des Créateurs.</h1>
-        <p class="texte-neo">"Bonjour, je suis Néo. Clique ici pour avoir accès à la gratuité cette semaine de tout ce que je peux te proposer pour reprendre le contrôle sur ta vie privée et professionnelle. Freedom."</p>
+        
+        <!-- Le grand texte qui disparaît -->
+        <p class="texte-neo-centre">"Bonjour, je suis Néo. Clique ici pour avoir accès à la gratuité cette semaine de tout ce que je peux te proposer pour reprendre le contrôle sur ta vie privée et professionnelle. Freedom."</p>
+        
+        <!-- Le petit texte qui revient à 20s -->
+        <p class="texte-neo-discret">"Bonjour, je suis Néo. Clique ici pour avoir accès à la gratuité cette semaine de tout ce que je peux te proposer pour reprendre le contrôle sur ta vie privée et professionnelle. Freedom."</p>
+
         <button class="bouton-acces">Clique ici</button>
     </div>
 
