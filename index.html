@@ -12,12 +12,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            /* C'est cette ligne qui pousse tout ton texte vers le bas de l'écran : */
+            justify-content: flex-end; 
             height: 100vh;
             margin: 0;
             text-align: center;
             padding: 20px;
             overflow: hidden;
+            box-sizing: border-box;
         }
         .background-video {
             position: absolute;
@@ -27,25 +29,33 @@
             height: 100%;
             object-fit: cover;
             z-index: -1;
-            opacity: 0.5;
+            opacity: 0.7;
         }
         .cadre-texte {
             z-index: 1;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 40px;
+            background: rgba(0, 0, 0, 0.75);
+            padding: 30px;
             border-radius: 15px;
             border: 2px solid #00FF41;
-            box-shadow: 0 0 20px #00FF41;
+            /* Effet fluo sur le contour du cadre : */
+            box-shadow: 0 0 20px #00FF41; 
             max-width: 800px;
+            /* La ligne magique pour que ça s'adapte aux téléphones : */
+            width: 90%; 
+            /* On décolle légèrement le cadre du bord bas de l'écran : */
+            margin-bottom: 5vh; 
         }
         h1 {
-            font-size: 2.5rem;
-            text-shadow: 0 0 10px #00FF41;
-            margin-bottom: 20px;
+            font-size: 2rem;
+            /* Effet fluo intense sur le grand titre : */
+            text-shadow: 0 0 15px #00FF41; 
+            margin-bottom: 15px;
         }
         p {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
+            font-size: 1.1rem;
+            /* Effet fluo ajouté sur le petit texte pour qu'il ressorte bien : */
+            text-shadow: 0 0 10px #00FF41; 
+            margin-bottom: 30px;
             line-height: 1.5;
         }
         .bouton-acces {
@@ -53,6 +63,8 @@
             background-color: transparent;
             color: #00FF41;
             border: 2px solid #00FF41;
+            /* Le bouton devient lui aussi fluo : */
+            box-shadow: 0 0 15px #00FF41; 
             font-size: 1.2rem;
             font-family: inherit;
             cursor: pointer;
@@ -61,17 +73,18 @@
         .bouton-acces:hover {
             background-color: #00FF41;
             color: #000000;
+            box-shadow: 0 0 25px #00FF41;
         }
     </style>
 </head>
 <body>
 
-    <!-- La vidéo en plein écran, silencieuse -->
+    <!-- La vidéo avec ton nouveau nom de fichier exact -->
     <video autoplay loop muted playsinline class="background-video">
-        <source src="Vidéo Mvp LMDC Néo 1.0.mp4" type="video/mp4">
+        <source src="MVPLMDC1.mp4" type="video/mp4">
     </video>
     
-    <!-- Le cadre avec ton texte par-dessus -->
+    <!-- Le cadre texte -->
     <div class="cadre-texte">
         <h1>Bienvenue dans La Matrice des Créateurs.</h1>
         <p>"Bonjour, je suis Néo. Clique ici pour avoir accès à la gratuité cette semaine de tout ce que je peux te proposer pour reprendre le contrôle sur ta vie privée et professionnelle. Freedom."</p>
