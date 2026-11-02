@@ -9,18 +9,12 @@
             background-color: #000000;
             color: #00FF41;
             font-family: 'Courier New', Courier, monospace;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            /* C'est cette ligne qui pousse tout ton texte vers le bas de l'écran : */
-            justify-content: flex-end; 
-            height: 100vh;
             margin: 0;
-            text-align: center;
-            padding: 20px;
-            overflow: hidden;
-            box-sizing: border-box;
+            overflow: hidden; /* Empêche l'écran de glisser vers le bas */
+            height: 100vh;
+            width: 100vw;
         }
+        
         .background-video {
             position: absolute;
             top: 0;
@@ -29,66 +23,132 @@
             height: 100%;
             object-fit: cover;
             z-index: -1;
-            opacity: 0.7;
+            opacity: 0.75;
         }
-        .cadre-texte {
+
+        /* La grille invisible qui place tes éléments */
+        .interface {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 1;
-            background: rgba(0, 0, 0, 0.75);
-            padding: 30px;
-            border-radius: 15px;
-            border: 2px solid #00FF41;
-            /* Effet fluo sur le contour du cadre : */
-            box-shadow: 0 0 20px #00FF41; 
-            max-width: 800px;
-            /* La ligne magique pour que ça s'adapte aux téléphones : */
-            width: 90%; 
-            /* On décolle légèrement le cadre du bord bas de l'écran : */
-            margin-bottom: 5vh; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Met le titre en haut et le reste en bas */
+            padding: 40px;
+            box-sizing: border-box;
+            pointer-events: none; /* Permet de cliquer à travers le vide */
         }
-        h1 {
-            font-size: 2rem;
-            /* Effet fluo intense sur le grand titre : */
-            text-shadow: 0 0 15px #00FF41; 
-            margin-bottom: 15px;
+
+        /* Le titre qui apparaît tout de suite */
+        .titre-intro {
+            font-size: 2.8rem;
+            text-shadow: 0 0 20px #00FF41, 0 0 5px #000000;
+            text-align: center;
+            margin-top: 5vh;
+            animation: fondu-entree 2s ease-in-out;
         }
-        p {
-            font-size: 1.1rem;
-            /* Effet fluo ajouté sur le petit texte pour qu'il ressorte bien : */
-            text-shadow: 0 0 10px #00FF41; 
-            margin-bottom: 30px;
-            line-height: 1.5;
+
+        /* La zone du bas (texte à gauche, bouton à droite) */
+        .zone-bas {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            width: 100%;
+            margin-bottom: 5vh; /* Niveau pantalon */
         }
-        .bouton-acces {
-            padding: 15px 30px;
-            background-color: transparent;
-            color: #00FF41;
-            border: 2px solid #00FF41;
-            /* Le bouton devient lui aussi fluo : */
-            box-shadow: 0 0 15px #00FF41; 
+
+        /* Le texte sous Néo */
+        .texte-neo {
+            max-width: 60%;
             font-size: 1.2rem;
+            line-height: 1.6;
+            text-shadow: 0 0 10px #00FF41;
+            background: rgba(0, 0, 0, 0.5); /* Un fond noir très léger juste pour lire */
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 2px solid #00FF41;
+            /* Attent 4 secondes avant d'apparaître : */
+            animation: apparition-retardee 4s ease-in-out; 
+            animation-fill-mode: both;
+        }
+
+        /* Ton nouveau bouton 100% vert fluo */
+        .bouton-acces {
+            pointer-events: auto; /* Réactive le clic */
+            padding: 15px 40px;
+            background-color: #00FF41; /* Le fond est vert */
+            color: #000000; /* Le texte est noir */
+            border: none;
+            box-shadow: 0 0 30px #00FF41;
+            font-size: 1.3rem;
             font-family: inherit;
+            font-weight: bold;
+            text-transform: uppercase;
             cursor: pointer;
+            border-radius: 5px;
+            /* Attent 4 secondes avant d'apparaître : */
+            animation: apparition-retardee 4s ease-in-out;
+            animation-fill-mode: both;
             transition: 0.3s;
         }
+
         .bouton-acces:hover {
-            background-color: #00FF41;
-            color: #000000;
-            box-shadow: 0 0 25px #00FF41;
+            background-color: #ffffff; /* Devient blanc quand on le frôle */
+            box-shadow: 0 0 40px #ffffff;
+        }
+
+        /* Le moteur des animations */
+        @keyframes fondu-entree {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes apparition-retardee {
+            0% { opacity: 0; }
+            70% { opacity: 0; transform: translateY(20px); } /* Reste invisible au début */
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Adaptation automatique pour les téléphones */
+        @media (max-width: 768px) {
+            .zone-bas {
+                flex-direction: column;
+                align-items: center;
+            }
+            .texte-neo {
+                max-width: 100%;
+                margin-bottom: 30px;
+                text-align: center;
+                border-left: none;
+                border-top: 2px solid #00FF41;
+            }
+            .titre-intro { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- La vidéo avec ton nouveau nom de fichier exact -->
+    <!-- Ta vidéo en arrière-plan -->
     <video autoplay loop muted playsinline class="background-video">
         <source src="MvpLMDC1.mp4" type="video/mp4">
     </video>
     
-    <!-- Le cadre texte -->
-    <div class="cadre-texte">
-        <h1>Bienvenue dans La Matrice des Créateurs.</h1>
-        <p>"Bonjour, je suis Néo. Clique ici pour avoir accès à la gratuité cette semaine de tout ce que je peux te proposer pour reprendre le contrôle sur ta vie privée et professionnelle. Freedom."</p>
-        <button class="bouton-acces">Clique ici</button>
+    <!-- L'interface éclatée -->
+    <div class="interface">
+        
+        <!-- En haut -->
+        <h1 class="titre-intro">Bienvenue dans La Matrice des Créateurs.</h1>
+        
+        <!-- En bas -->
+        <div class="zone-bas">
+            <p class="texte-neo">"Bonjour, je suis Néo. Clique ici pour avoir accès à la gratuité cette semaine de tout ce que je peux te proposer pour reprendre le contrôle sur ta vie privée et professionnelle. Freedom."</p>
+            
+            <button class="bouton-acces">Clique ici</button>
+        </div>
+
     </div>
 
 </body>
