@@ -10,7 +10,7 @@
             color: #00FF41;
             font-family: 'Courier New', Courier, monospace;
             margin: 0;
-            overflow: hidden; /* Empêche l'écran de glisser vers le bas */
+            overflow: hidden;
             height: 100vh;
             width: 100vw;
         }
@@ -26,7 +26,6 @@
             opacity: 0.75;
         }
 
-        /* La grille invisible qui place tes éléments */
         .interface {
             position: absolute;
             top: 0;
@@ -34,121 +33,116 @@
             width: 100%;
             height: 100%;
             z-index: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; /* Met le titre en haut et le reste en bas */
-            padding: 40px;
-            box-sizing: border-box;
-            pointer-events: none; /* Permet de cliquer à travers le vide */
+            pointer-events: none;
         }
 
-        /* Le titre qui apparaît tout de suite */
+        /* --- LE MOTEUR TEMPOREL --- */
+        @keyframes sequence-titre {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; } /* Disparaît à la fin de ses 3s */
+        }
+
+        @keyframes sequence-texte {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; } /* Disparaît à la fin de ses 4s */
+        }
+
+        @keyframes sequence-bouton {
+            0% { opacity: 0; }
+            100% { opacity: 1; } /* Reste affiché pour le clic */
+        }
+
+        /* ÉTAPE 1 : Le titre (0 à 3 secondes) */
         .titre-intro {
+            position: absolute;
+            top: 8vh;
+            width: 100%;
+            text-align: center;
             font-size: 2.8rem;
             text-shadow: 0 0 20px #00FF41, 0 0 5px #000000;
-            text-align: center;
-            margin-top: 5vh;
-            animation: fondu-entree 2s ease-in-out;
+            margin: 0;
+            opacity: 0;
+            animation: sequence-titre 3s ease-in-out forwards;
         }
 
-        /* La zone du bas (texte à gauche, bouton à droite) */
-        .zone-bas {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            width: 100%;
-            margin-bottom: 5vh; /* Niveau pantalon */
-        }
-
-        /* Le texte sous Néo */
+        /* ÉTAPE 2 : Le texte (3 à 7 secondes) */
         .texte-neo {
-            max-width: 60%;
+            position: absolute;
+            bottom: 5vh;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 800px;
             font-size: 1.2rem;
             line-height: 1.6;
             text-shadow: 0 0 10px #00FF41;
-            background: rgba(0, 0, 0, 0.5); /* Un fond noir très léger juste pour lire */
+            background: rgba(0, 0, 0, 0.6);
             padding: 20px;
             border-radius: 10px;
-            border-left: 2px solid #00FF41;
-            /* Attent 4 secondes avant d'apparaître : */
-            animation: apparition-retardee 4s ease-in-out; 
-            animation-fill-mode: both;
+            text-align: center;
+            opacity: 0;
+            /* Attend 3s, puis joue pendant 4s */
+            animation: sequence-texte 4s ease-in-out 3s forwards; 
         }
 
-        /* Ton nouveau bouton 100% vert fluo */
+        /* ÉTAPE 3 : Le bouton (7 secondes et plus) */
         .bouton-acces {
-            pointer-events: auto; /* Réactive le clic */
-            padding: 15px 40px;
-            background-color: #00FF41; /* Le fond est vert */
-            color: #000000; /* Le texte est noir */
+            position: absolute;
+            top: 50%;
+            right: 10vw;
+            transform: translateY(-50%);
+            pointer-events: auto;
+            
+            background-color: #00FF41; 
+            color: #000000; 
             border: none;
             box-shadow: 0 0 30px #00FF41;
+            
+            padding: 15px 40px;
             font-size: 1.3rem;
             font-family: inherit;
             font-weight: bold;
             text-transform: uppercase;
             cursor: pointer;
             border-radius: 5px;
-            /* Attent 4 secondes avant d'apparaître : */
-            animation: apparition-retardee 4s ease-in-out;
-            animation-fill-mode: both;
             transition: 0.3s;
+            
+            opacity: 0;
+            /* Attend 7s (3+4), puis joue pendant 2s et reste fixe */
+            animation: sequence-bouton 2s ease-in-out 7s forwards;
         }
 
         .bouton-acces:hover {
-            background-color: #ffffff; /* Devient blanc quand on le frôle */
+            background-color: #ffffff;
             box-shadow: 0 0 40px #ffffff;
         }
 
-        /* Le moteur des animations */
-        @keyframes fondu-entree {
-            0% { opacity: 0; transform: translateY(-20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes apparition-retardee {
-            0% { opacity: 0; }
-            70% { opacity: 0; transform: translateY(20px); } /* Reste invisible au début */
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Adaptation automatique pour les téléphones */
         @media (max-width: 768px) {
-            .zone-bas {
-                flex-direction: column;
-                align-items: center;
+            .titre-intro { font-size: 1.8rem; top: 5vh; }
+            .bouton-acces {
+                top: auto;
+                bottom: 25vh;
+                right: 50%;
+                transform: translateX(50%);
             }
-            .texte-neo {
-                max-width: 100%;
-                margin-bottom: 30px;
-                text-align: center;
-                border-left: none;
-                border-top: 2px solid #00FF41;
-            }
-            .titre-intro { font-size: 1.8rem; }
+            .texte-neo { bottom: 2vh; font-size: 1rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Ta vidéo en arrière-plan -->
     <video autoplay loop muted playsinline class="background-video">
         <source src="MvpLMDC1.mp4" type="video/mp4">
     </video>
     
-    <!-- L'interface éclatée -->
     <div class="interface">
-        
-        <!-- En haut -->
         <h1 class="titre-intro">Bienvenue dans La Matrice des Créateurs.</h1>
-        
-        <!-- En bas -->
-        <div class="zone-bas">
-            <p class="texte-neo">"Bonjour, je suis Néo. Clique ici pour avoir accès à la gratuité cette semaine de tout ce que je peux te proposer pour reprendre le contrôle sur ta vie privée et professionnelle. Freedom."</p>
-            
-            <button class="bouton-acces">Clique ici</button>
-        </div>
-
+        <p class="texte-neo">"Bonjour, je suis Néo. Clique ici pour avoir accès à la gratuité cette semaine de tout ce que je peux te proposer pour reprendre le contrôle sur ta vie privée et professionnelle. Freedom."</p>
+        <button class="bouton-acces">Clique ici</button>
     </div>
 
 </body>
