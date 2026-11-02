@@ -2,10 +2,66 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Matrice des Créateurs</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #00FF41;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            padding: 20px;
+        }
+        .avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 3px solid #00FF41;
+            box-shadow: 0 0 20px #00FF41;
+            margin-bottom: 30px;
+            object-fit: cover;
+        }
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px #00FF41;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+        .bouton-acces {
+            padding: 15px 30px;
+            background-color: transparent;
+            color: #00FF41;
+            border: 2px solid #00FF41;
+            font-size: 1.2rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .bouton-acces:hover {
+            background-color: #00FF41;
+            color: #000000;
+        }
+    </style>
 </head>
 <body>
-    <h1>Bienvenue dans La Matrice des Créateurs</h1>
-    <p>Système en cours d'initialisation...</p>
+
+    <!-- C'est ici que l'image de Néo s'affichera -->
+    <img src="neo.jpg" alt="Portrait de Néo" class="avatar">
+    
+    <h1>Bienvenue dans La Matrice des Créateurs.</h1>
+    <p>"Je suis Néo. Reprenez le contrôle de votre vie privée et libérez votre souveraineté créative."</p>
+    
+    <button class="bouton-acces">Connexion au réseau</button>
+
 </body>
 </html>
