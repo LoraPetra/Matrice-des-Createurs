@@ -531,13 +531,12 @@ video.addEventListener('timeupdate', function() {
         const fenetreCapture = document.getElementById('fenetre-capture');
         let formulaireAffiche = false;
 
-        video.addEventListener('timeupdate', () => {
-            // Si la vidéo dépasse 13 secondes et que le formulaire est caché
-            if (video.currentTime >= 13 && !formulaireAffiche) {
-                fenetreCapture.classList.add('optin-visible');
-                formulaireAffiche = true; // On bloque pour ne pas le répéter
-            }
-        });
+        setTimeout(() => {
+    if (!formulaireAffiche) {
+        fenetreCapture.classList.add('optin-visible');
+        formulaireAffiche = true;
+    }
+}, 13000);
         
     </script>
     
