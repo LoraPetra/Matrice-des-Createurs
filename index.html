@@ -507,6 +507,16 @@ video.addEventListener('timeupdate', function() {
         selecteurLangue.addEventListener('change', function() {
             if (this.value !== "") {
                 video.play();
+
+// Traduction instantanée du formulaire
+            if (dictionnaireFormulaire[this.value]) {
+                document.getElementById('optin-titre').innerText = dictionnaireFormulaire[this.value].titre;
+                document.getElementById('optin-prenom').placeholder = dictionnaireFormulaire[this.value].prenom;
+                document.getElementById('optin-email').placeholder = dictionnaireFormulaire[this.value].email;
+                document.getElementById('optin-texte-rgpd').innerText = dictionnaireFormulaire[this.value].rgpd;
+                document.getElementById('bouton-valider').innerText = dictionnaireFormulaire[this.value].bouton;
+            }
+                
                 if (dictionnaireNeo[this.value]) {
                     textePrincipal.innerText = dictionnaireNeo[this.value];
                     texteSecondaire.innerText = dictionnaireNeo[this.value];
