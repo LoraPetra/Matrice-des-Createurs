@@ -182,7 +182,7 @@
 </head>
 <body>
 
-    <video autoplay loop muted playsinline class="background-video">
+    <video id="video-fond" autoplay loop muted playsinline class="background-video">
         <source src="MvpLMDC1.mp4" type="video/mp4">
     </video>
     
@@ -264,11 +264,29 @@
         <!-- Le grand texte qui disparaît -->
         <p class="texte-neo-centre">"Bonjour, je suis Néo. Clique ici pour avoir accès à la gratuité cette semaine de tout ce que je peux te proposer pour reprendre le contrôle sur ta vie privée et professionnelle. Freedom."</p>
         
-        <!-- Le petit texte qui revient à 20s -->
+        <!-- Le petit texte qui revient à 12s -->
         <p class="texte-neo-discret">"Bonjour, je suis Néo. Clique ici pour avoir accès à la gratuité cette semaine de tout ce que je peux te proposer pour reprendre le contrôle sur ta vie privée et professionnelle. Freedom."</p>
 
         <button class="bouton-acces">Clique ici</button>
     </div>
 
+    <script>
+        const video = document.getElementById('video-fond');
+        const selecteurLangue = document.querySelector('.selecteur-langue');
+        let pauseEffectuee = false;
+video.addEventListener('timeupdate', function() {
+            if (video.currentTime >= 5 && !pauseEffectuee) {
+                video.pause();
+                pauseEffectuee = true;
+            }
+        });
+
+        selecteurLangue.addEventListener('change', function() {
+            if (this.value !== "") {
+                video.play();
+            }
+        });
+    </script>
+    
 </body>
 </html>
