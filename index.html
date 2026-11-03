@@ -5,169 +5,158 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Matrice des Créateurs</title>
     <style>
-        body {
-            background-color: #000000;
-            color: #00FF41;
-            font-family: 'Courier New', Courier, monospace;
-            margin: 0;
-            overflow: hidden;
-            height: 100vh;
-            width: 100vw;
-        }
+        body { margin: 0; overflow: hidden; background: #000; color: #00FF41; font-family: 'Courier New', Courier, monospace; }
+        .background-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 0.75; }
+        .interface { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
         
-        .background-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-            opacity: 0.75;
+        /* Utilitaires de base */
+        .hidden { display: none !important; }
+        .invisible { opacity: 0 !important; pointer-events: none !important; }
+        
+        /* --- LE MOTEUR D'EFFETS MATRIX --- */
+        @keyframes matrice-apparition {
+            0% { opacity: 0; filter: blur(15px) brightness(300%) contrast(200%); transform: scale(1.1); text-shadow: 0 0 50px #00FF41; }
+            50% { opacity: 0.8; filter: blur(5px) brightness(150%); transform: scale(1.02); text-shadow: 0 0 30px #00FF41, 0 0 10px #ffffff; }
+            100% { opacity: 1; filter: blur(0); transform: scale(1); text-shadow: 0 0 10px #00FF41; }
         }
 
-        .interface {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
+        @keyframes matrice-disparition {
+            0% { opacity: 1; filter: blur(0); transform: scale(1); }
+            50% { opacity: 0.9; filter: blur(5px) brightness(200%); transform: scale(1.05); text-shadow: 0 0 40px #00FF41, 0 0 15px #ffffff; }
+            100% { opacity: 0; filter: blur(20px) brightness(300%) contrast(200%); transform: scale(1.2); text-shadow: 0 0 50px #00FF41; }
         }
 
-        /* --- LE MOTEUR TEMPOREL --- */
-        @keyframes sequence-titre {
-            0% { opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { opacity: 0; }
-        }
+        .effet-matrice-in { animation: matrice-apparition 0.8s ease-out forwards; pointer-events: auto !important; }
+        .effet-matrice-out { animation: matrice-disparition 0.6s ease-in forwards; pointer-events: none !important; }
 
-        @keyframes sequence-texte {
-            0% { opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { opacity: 0; }
-        }
+        /* ÉTAPE 1 : Titre central */
+        .titre-intro { position: absolute; top: 8vh; width: 100%; text-align: center; font-size: 2.8rem; transition: opacity 0.5s; text-shadow: 0 0 20px #00FF41, 0 0 5px #000000; }
+        
+        /* ÉTAPE 2 : Écran des langues (En haut à gauche) */
+        .etape-langue { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; }
+        .neo-pointe { position: absolute; bottom: 0; left: 5vw; height: 70vh; }
+        .menu-langues { position: absolute; top: 15vh; left: 5vw; background: rgba(0,0,0,0.8); border: 2px solid #00FF41; padding: 20px; border-radius: 10px; box-shadow: 0 0 15px #00FF41; }
+        .lang-btn { display: block; width: 100%; background: #000; color: #00FF41; border: 1px solid #00FF41; padding: 15px; margin-bottom: 10px; cursor: pointer; font-family: inherit; font-size: 1.2rem; font-weight: bold; }
+        .lang-btn:hover { background: #00FF41; color: #000; box-shadow: 0 0 15px #00FF41; }
 
-        @keyframes apparition-permanente {
-            0% { opacity: 0; }
-            100% { opacity: 1; } /* Reste affiché pour toujours */
-        }
+        /* ÉTAPE 3 : Drapeau et Boîte aux lettres */
+        .drapeau-anim { position: absolute; top: 15vh; left: 5vw; font-size: 4rem; opacity: 0; transition: transform 1.5s ease-in-out, top 1.5s ease-in-out, left 1.5s ease-in-out; z-index: 10; }
+        .boite-lettres { position: absolute; bottom: 25vh; right: 10vw; font-size: 5rem; opacity: 0; }
+        .lettre-glisse { top: calc(75vh - 5rem) !important; left: calc(90vw - 4rem) !important; transform: scale(0.3); }
 
-        /* ÉTAPE 1 : Le titre (0 à 3 secondes) */
-        .titre-intro {
-            position: absolute;
-            top: 8vh;
-            width: 100%;
-            text-align: center;
-            font-size: 2.8rem;
-            text-shadow: 0 0 20px #00FF41, 0 0 5px #000000;
-            margin: 0;
-            opacity: 0;
-            animation: sequence-titre 3s ease-in-out forwards;
-        }
-
-        /* ÉTAPE 2 : Le texte central (3 à 7 secondes) */
-        .texte-neo-centre {
-            position: absolute;
-            bottom: 5vh;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 800px;
-            font-size: 1.2rem;
-            line-height: 1.6;
-            text-shadow: 0 0 10px #00FF41;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            opacity: 0;
-            animation: sequence-texte 4s ease-in-out 3s forwards; 
-        }
-
-        /* ÉTAPE 3 : Le bouton (7 secondes et plus) */
-        .bouton-acces {
-            position: absolute;
-            top: 50%;
-            right: 10vw;
-            transform: translateY(-50%);
-            pointer-events: auto;
-            
-            background-color: #00FF41; 
-            color: #000000; 
-            border: none;
-            box-shadow: 0 0 30px #00FF41;
-            
-            padding: 15px 40px;
-            font-size: 1.3rem;
-            font-family: inherit;
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: 0.3s;
-            
-            opacity: 0;
-            animation: apparition-permanente 2s ease-in-out 7s forwards;
-        }
-
-        .bouton-acces:hover {
-            background-color: #ffffff;
-            box-shadow: 0 0 40px #ffffff;
-        }
-
-        /* ÉTAPE 4 : Le texte de rappel (20 secondes et plus, en bas à gauche) */
-        .texte-neo-discret {
-            position: absolute;
-            bottom: 5vh;
-            left: 3vw; /* Calé à gauche */
-            width: 80%;
-            max-width: 350px; /* Plus étroit */
-            font-size: 0.85rem; /* Plus petit */
-            line-height: 1.4;
-            text-shadow: 0 0 5px #00FF41;
-            background: rgba(0, 0, 0, 0.4); /* Fond plus léger */
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 2px solid #00FF41; /* Petite touche esthétique */
-            opacity: 0;
-            /* Attend 20 secondes, puis apparaît doucement en 2 secondes */
-            animation: apparition-permanente 2s ease-in-out 13s forwards;
-        }
-
-        @media (max-width: 768px) {
-            .titre-intro { font-size: 1.8rem; top: 5vh; }
-            .bouton-acces {
-                top: auto;
-                bottom: 25vh;
-                right: 50%;
-                transform: translateX(50%);
-            }
-            .texte-neo-centre { bottom: 2vh; font-size: 1rem; }
-            .texte-neo-discret { bottom: 2vh; left: 50%; transform: translateX(-50%); font-size: 0.75rem; text-align: center; border-left: none; border-top: 2px solid #00FF41;}
-        }
+        /* ÉTAPE 4 : Textes et Formulaire (À droite) */
+        .texte-neo-centre { position: absolute; bottom: 5vh; left: 50%; transform: translateX(-50%); width: 90%; max-width: 800px; font-size: 1.2rem; line-height: 1.6; background: rgba(0, 0, 0, 0.6); padding: 20px; border-radius: 10px; text-align: center; opacity: 0; transition: opacity 1s; }
+        
+        @keyframes apparition-permanente { 0% { opacity: 0; } 100% { opacity: 1; } }
+        .texte-neo-discret { position: absolute; bottom: 5vh; left: 3vw; width: 80%; max-width: 350px; font-size: 0.85rem; line-height: 1.4; text-shadow: 0 0 5px #00FF41; background: rgba(0, 0, 0, 0.4); padding: 15px; border-radius: 8px; border-left: 2px solid #00FF41; opacity: 0; }
+        .texte-discret-actif { animation: apparition-permanente 2s ease-in-out 13s forwards; }
+        
+        /* Formulaire : Axé exactement sur right: 10vw pour s'aligner avec la boîte */
+        .formulaire-acces { position: absolute; top: 50%; right: 10vw; transform: translateY(-50%); background: rgba(0,0,0,0.8); border: 2px solid #00FF41; padding: 30px; border-radius: 10px; text-align: center; opacity: 0; box-shadow: 0 0 20px #00FF41; }
+        .form-input { display: block; width: 90%; margin: 10px auto; padding: 12px; background: #000; color: #00FF41; border: 1px solid #00FF41; font-family: inherit; font-size: 1rem; }
+        .form-input::placeholder { color: #004411; }
+        .bouton-valider { margin-top: 20px; background: #00FF41; color: #000; border: none; padding: 15px 40px; font-weight: bold; cursor: pointer; font-family: inherit; font-size: 1.3rem; transition: 0.3s; }
+        .bouton-valider:hover { background: #ffffff; box-shadow: 0 0 30px #ffffff; }
     </style>
 </head>
 <body>
 
-    <video autoplay loop muted playsinline class="background-video">
+    <video id="bg-video" autoplay loop muted playsinline class="background-video">
         <source src="MvpLMDC1.mp4" type="video/mp4">
     </video>
     
     <div class="interface">
-        <h1 class="titre-intro">Bienvenue dans La Matrice des Créateurs.</h1>
+        <h1 id="titre" class="titre-intro">Bienvenue dans La Matrice des Créateurs.</h1>
         
-        <!-- Le grand texte qui disparaît -->
-        <p class="texte-neo-centre">"Bonjour, je suis Néo. Clique ici pour avoir accès à la gratuité cette semaine de tout ce que je peux te proposer pour reprendre le contrôle sur ta vie privée et professionnelle. Freedom."</p>
-        
-        <!-- Le petit texte qui revient à 20s -->
-        <p class="texte-neo-discret">"Bonjour, je suis Néo. Clique ici pour avoir accès à la gratuité cette semaine de tout ce que je peux te proposer pour reprendre le contrôle sur ta vie privée et professionnelle. Freedom."</p>
+        <div id="ecran-langue" class="etape-langue">
+            <img src="neo-langues.jpg" class="neo-pointe" alt="Néo" onerror="this.style.display='none'">
+            <div class="menu-langues">
+                <button class="lang-btn" onclick="choisirLangue('fr', '🇫🇷')">FRANÇAIS 🇫🇷</button>
+                <button class="lang-btn" onclick="choisirLangue('en', '🇬🇧')">ENGLISH 🇬🇧</button>
+                <button class="lang-btn" onclick="choisirLangue('es', '🇪🇸')">ESPAÑOL 🇪🇸</button>
+            </div>
+        </div>
 
-        <button class="bouton-acces">Clique ici</button>
+        <div id="drapeau" class="drapeau-anim"></div>
+        <div id="boite" class="boite-lettres">📬</div>
+
+        <p id="texte-centre" class="texte-neo-centre invisible">"Bonjour, je suis Néo. Remplis tes accès ci-dessus pour entrer dans la gratuité de La Matrice. Freedom."</p>
+        <p id="texte-discret" class="texte-neo-discret invisible">"Bonjour, je suis Néo. Remplis tes accès ci-dessus pour entrer dans la gratuité de La Matrice. Freedom."</p>
+        
+        <div id="formulaire" class="formulaire-acces">
+            <h2 style="margin-top:0;">Identification</h2>
+            <input type="text" class="form-input" placeholder="Prénom">
+            <input type="email" class="form-input" placeholder="Adresse e-mail">
+            <button class="bouton-valider">VALIDER L'ACCÈS</button>
+        </div>
     </div>
 
+    <script>
+        const video = document.getElementById('bg-video');
+        const titre = document.getElementById('titre');
+        const ecranLangue = document.getElementById('ecran-langue');
+        const texteCentre = document.getElementById('texte-centre');
+        const texteDiscret = document.getElementById('texte-discret');
+        const formulaire = document.getElementById('formulaire');
+        const drapeau = document.getElementById('drapeau');
+        const boite = document.getElementById('boite');
+        
+        let pauseFaite = false;
+
+        // ARRÊT SUR IMAGE : À 3s, le menu apparaît avec l'effet Matrix
+        video.addEventListener('timeupdate', () => {
+            if (video.currentTime >= 3 && !pauseFaite) {
+                video.pause();
+                pauseFaite = true;
+                titre.classList.add('invisible');
+                ecranLangue.classList.add('effet-matrice-in');
+            }
+        });
+
+        // LE DÉCLENCHEUR : Le Clic
+        function choisirLangue(langue, emoji) {
+            // 1. Le menu se désagrège
+            ecranLangue.classList.remove('effet-matrice-in');
+            ecranLangue.classList.add('effet-matrice-out');
+            
+            // 2. Le drapeau et la boîte aux lettres se matérialisent
+            setTimeout(() => {
+                ecranLangue.classList.add('hidden'); // On le cache pour de bon
+                
+                drapeau.innerText = emoji;
+                drapeau.classList.add('effet-matrice-in');
+                boite.classList.add('effet-matrice-in');
+                
+                // Relance de la vidéo et du grand texte
+                video.play();
+                texteCentre.classList.remove('invisible');
+                texteCentre.classList.add('effet-matrice-in');
+                
+                texteDiscret.classList.remove('invisible');
+                texteDiscret.classList.add('texte-discret-actif');
+            }, 600); // 600ms = le temps que le menu finisse de se désagréger
+
+            // 3. Le drapeau glisse
+            setTimeout(() => { 
+                drapeau.classList.add('lettre-glisse'); 
+            }, 800);
+
+            // 4. L'IMPACT : La boîte explose et le formulaire apparaît
+            setTimeout(() => {
+                // La boîte et la lettre se désagrègent
+                boite.classList.remove('effet-matrice-in');
+                boite.classList.add('effet-matrice-out');
+                drapeau.classList.remove('effet-matrice-in');
+                drapeau.classList.add('effet-matrice-out');
+
+                // 500ms plus tard, le formulaire se matérialise
+                setTimeout(() => {
+                    boite.classList.add('hidden');
+                    drapeau.classList.add('hidden');
+                    formulaire.classList.add('effet-matrice-in');
+                }, 500);
+            }, 2400); // Temps total avant l'impact
+        }
+    </script>
 </body>
 </html>
