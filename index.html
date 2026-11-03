@@ -296,6 +296,9 @@ video.addEventListener('timeupdate', function() {
                 if (dictionnaireNeo[this.value]) {
                     textePrincipal.innerText = dictionnaireNeo[this.value];
                     texteSecondaire.innerText = dictionnaireNeo[this.value];
+                    textePrincipal.style.display = "none";
+                    texteSecondaire.style.animation = "none";
+                    texteSecondaire.style.opacity = "1";
                 }
             }
         });
