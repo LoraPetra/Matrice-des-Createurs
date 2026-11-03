@@ -55,7 +55,35 @@
             0% { opacity: 0; }
             100% { opacity: 1; } /* Reste affiché pour toujours */
         }
+/* LE MENU DES LANGUES */
+        .bloc-menu-langues {
+            position: absolute;
+            top: 5vh;
+            left: 5vw;
+            pointer-events: auto;
+            opacity: 0;
+            /* Le déclencheur temporel : apparaît à 3 secondes */
+            animation: apparition-permanente 1s ease-in-out 3s forwards;
+            z-index: 10;
+        }
 
+        .selecteur-langue {
+            background-color: #000000;
+            color: #00FF41;
+            border: 2px solid #00FF41;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            font-family: inherit;
+            border-radius: 5px;
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0 0 15px #00FF41;
+        }
+
+        .selecteur-langue option {
+            background-color: #000000;
+            color: #00FF41;
+        }
         /* ÉTAPE 1 : Le titre (0 à 3 secondes) */
         .titre-intro {
             position: absolute;
