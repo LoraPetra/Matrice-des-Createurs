@@ -448,6 +448,19 @@ video.addEventListener('timeupdate', function() {
                 }
             }
         });
+
+// Chronomètre de 13 secondes pour le formulaire
+        const fenetreCapture = document.getElementById('fenetre-capture');
+        let formulaireAffiche = false;
+
+        video.addEventListener('timeupdate', () => {
+            // Si la vidéo dépasse 13 secondes et que le formulaire est caché
+            if (video.currentTime >= 13 && !formulaireAffiche) {
+                fenetreCapture.classList.add('optin-visible');
+                formulaireAffiche = true; // On bloque pour ne pas le répéter
+            }
+        });
+        
     </script>
     
 </body>
