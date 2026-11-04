@@ -328,9 +328,7 @@
         
         <!-- Le petit texte qui revient à 12s -->
         <p class="texte-neo-discret" id="texte-secondaire">"Bonjour, je suis Néo. Clique ici pour avoir accès à la gratuité cette semaine de tout ce que je peux te proposer pour reprendre le contrôle sur ta vie privée et professionnelle. Freedom."</p>
-
-    
-        
+          
     </div>
 
     <script>
@@ -420,11 +418,13 @@ video.addEventListener('timeupdate', function() {
             }
         });
 
-        selecteurLangue.addEventListener('change', function() {
+       selecteurLangue.addEventListener('change', function() {
             if (this.value !== "") {
+                texteSecondaire.innerText = dictionnaireNeo[this.value];
+                textePrincipal.style.display = "none";
+                texteSecondaire.style.animation = "none";
+                texteSecondaire.style.opacity = "1";
                 video.play();
-
-
             }
         });
 
