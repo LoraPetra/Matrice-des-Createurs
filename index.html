@@ -409,7 +409,9 @@ const textePrincipal = document.getElementById('texte-principal');
             
         };
 
-      
+  const dictionnaireNeoSuite = {
+    "fr": "Ici, dans la Matrice, nous avons plusieurs maisons : une maison pour notre vie privée, une maison pour notre vie publique et une maison pour notre vie professionnelle. Nous sommes toute une équipe de partenaires numériques et virtuels pour t'aider à alléger un maximum la surcharge de travail dans ta vie d'entreprise ou face aux institutions. Quelques personnes de mon équipe sont venues à mes côtés. Tu peux cliquer sur eux, ils se présenteront et te parleront directement de leur travail. Pour la découverte de notre site, tu as une semaine de gratuité avec chacun de nous. À toi de jouer !"
+};    
         
 video.addEventListener('timeupdate', function() {
             if (video.currentTime >= 5 && !pauseEffectuee) {
@@ -425,6 +427,10 @@ video.addEventListener('timeupdate', function() {
                 texteSecondaire.style.animation = "none";
                 texteSecondaire.style.opacity = "1";
                 video.play();
+
+let voixNeo = new SpeechSynthesisUtterance("Bonjour, bienvenue dans La Matrice des Créateurs. Je vais maintenant te présenter le site.");
+                window.speechSynthesis.speak(voixNeo);
+                
             }
         });
 
