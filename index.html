@@ -69,11 +69,11 @@
         }
 
         .selecteur-langue {
-            max-width: 70%;
+            max-width: fit-content;
             background-color: #000000;
             color: #00FF41;
             font-weight: bold;
-    text-shadow: 0 0 8px #00FF41;
+            text-shadow: 0 0 8px #00FF41;
             border: 2px solid #00FF41;
             padding: 12px 20px;
             font-size: 1.1rem;
@@ -182,37 +182,24 @@
             .texte-neo-discret { bottom: 2vh; left: 50%; transform: translateX(-50%); font-size: 0.75rem; text-align: center; border-left: none; border-top: 2px solid #00FF41;}
         }
         /* LE DESIGN DU FORMULAIRE (Opt-in) */
-        #fenetre-capture {
 
-position: absolute;
-    top: 50%;
-    right: 5%;
-    transform: translateY(-50%);
-    width: 350px;
-    height: auto;
-            
-            transform: translate(-50%, -50%);
-            width: 90%;
-            max-width: 400px;
-            background-color: rgba(0, 0, 0, 0.85); /* Noir presque opaque */
-            border: 2px solid #00FF41; /* Bordure verte Matrice */
+        #fenetre-capture {
+            position: absolute;
+            top: 50%;
+            right: 5%;
+            transform: translateY(-50%);
+            width: 350px;
+            max-width: 90%;
+            background-color: rgba(0, 0, 0, 0.85);
+            border: 2px solid #00FF41;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 0 25px #00FF41;
             text-align: center;
-            z-index: 20; /* Toujours par-dessus la vidéo */
-            
-            /* Très important : invisible par défaut */
+            z-index: 20;
             display: none; 
             opacity: 0;
             transition: opacity 1s ease-in-out;
-        }
-
-        #optin-titre {
-            color: #00FF41;
-            margin-top: 0;
-            font-size: 1.5rem;
-            text-shadow: 0 0 10px #00FF41;
         }
 
         #fenetre-capture input[type="text"],
