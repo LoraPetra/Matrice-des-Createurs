@@ -428,9 +428,25 @@ video.addEventListener('timeupdate', function() {
                 texteSecondaire.style.opacity = "1";
                 video.play();
 
-let voixNeo = new SpeechSynthesisUtterance("Bonjour, bienvenue dans La Matrice des Créateurs. Je vais maintenant te présenter le site.");
-                window.speechSynthesis.speak(voixNeo);
+let texteA_lire = dictionnaireNeo[this.value];
+                let voixNeo = new SpeechSynthesisUtterance(texteA_lire);
                 
+                voixNeo.lang = this.value;
+                voixNeo.rate = 1.2;
+                voixNeo.pitch = 0.5;
+                
+                window.speechSynthesis.speak(voixNeo);
+
+                setTimeout(function() {
+                    let texteSuite = dictionnaireNeoSuite[selecteurLangue.value];
+                    let voixNeoSuite = new SpeechSynthesisUtterance(texteSuite);
+                    
+                    voixNeoSuite.lang = selecteurLangue.value;
+                    voixNeoSuite.rate = 1.2;
+                    voixNeoSuite.pitch = 0.5;
+                    
+                    window.speechSynthesis.speak(voixNeoSuite);
+                }, 5000);
             }
         });
 
