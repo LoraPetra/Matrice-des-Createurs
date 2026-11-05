@@ -241,21 +241,35 @@
         }
    
     /* --- DESIGN DES MAISONS --- */
+
+        /* --- DESIGN DES MAISONS --- */
         .maison-animee {
             position: absolute;
             opacity: 0; 
             pointer-events: none; 
             z-index: 10;
+            color: #00FF41;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px #00FF41;
+            border: 2px solid #00FF41;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px #00FF41;
         }
-
-        #maison-privee { left: 5%; bottom: 20%; width: 250px; }
-        #maison-publique { left: 50%; transform: translateX(-50%); bottom: 20%; width: 250px; }
-        #maison-pro { right: 5%; bottom: 20%; width: 250px; }
+        /* 1. Milieu à gauche */
+        #maison-privee { left: 5%; top: 45%; }
+        /* 2. Haut au centre */
+        #maison-publique { left: 50%; transform: translateX(-50%); top: 12%; }
+        /* 3. Bas à gauche */
+        #maison-pro { left: 5%; bottom: 15%; }
         
         .maison-visible {
             opacity: 1;
             pointer-events: auto;
-            transition: opacity 1s ease-in-out; /* Fait apparaître en douceur */
+            transition: opacity 1s ease-in-out;
+            cursor: pointer;
         }
     
     </style>
@@ -353,10 +367,12 @@
         
         <!-- Le petit texte qui revient à 12s -->
         <p class="texte-neo-discret" id="texte-secondaire">"Bonjour, je suis Néo. Clique ici pour avoir accès à la gratuité cette semaine de tout ce que je peux te proposer pour reprendre le contrôle sur ta vie privée et professionnelle. Freedom."</p>
-          
-    </div>
 
+        <button class="bouton-acces" id="bouton-entrer">Entrer</button>
+        
+          </div>
     <script>
+
         const video = document.getElementById('video-fond');
 
 const maisonPrivee = document.getElementById('maison-privee');
@@ -442,19 +458,6 @@ const textePrincipal = document.getElementById('texte-principal');
   const dictionnaireNeoSuite = {
     "fr": "Ici, dans la Matrice, nous avons plusieurs maisons : une maison pour notre vie privée, une maison pour notre vie publique et une maison pour notre vie professionnelle. Nous sommes toute une équipe de partenaires numériques et virtuels pour t'aider à alléger un maximum la surcharge de travail dans ta vie d'entreprise ou face aux institutions. Quelques personnes de mon équipe sont venues à mes côtés. Tu peux cliquer sur eux, ils se présenteront et te parleront directement de leur travail. Pour la découverte de notre site, tu as une semaine de gratuité avec chacun de nous. À toi de jouer !"
 };    
-
-let pauseFinale = false; 
-        
-        video.addEventListener('timeupdate', function() {
-            if (video.currentTime >= 5 && !pauseEffectuee) {
-                video.pause();
-                pauseEffectuee = true;
-            }
-    setTimeout(function() {
-                video.pause();
-        video.currentTime = 1;
-            }, 19000);                
-        });
           
  selecteurLangue.addEventListener('change', function() {
             if (this.value !== "") {
