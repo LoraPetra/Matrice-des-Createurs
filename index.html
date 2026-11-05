@@ -468,6 +468,13 @@ let audioNeo = new Audio('NEOvoix1.mp3');
                 audioNeo.playbackRate = 1.15;
                 audioNeo.play();
 
+                // APPARITION DES MAISONS À 11 SECONDES
+                setTimeout(function() {
+                    maisonPrivee.classList.add('maison-visible');
+                    maisonPublique.classList.add('maison-visible');
+                    maisonPro.classList.add('maison-visible');
+                }, 11000);
+
 setTimeout(function() {
                     let audioNeo2 = new Audio('VoixNEO.2.mp3');
                     audioNeo2.volume = 0.5;
