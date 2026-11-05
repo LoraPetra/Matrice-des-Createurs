@@ -239,6 +239,25 @@
             display: block !important;
             opacity: 1 !important;
         }
+   
+    /* --- DESIGN DES MAISONS --- */
+        .maison-animee {
+            position: absolute;
+            opacity: 0; 
+            pointer-events: none; 
+            z-index: 10;
+        }
+
+        #maison-privee { left: 5%; bottom: 20%; width: 250px; }
+        #maison-publique { left: 50%; transform: translateX(-50%); bottom: 20%; width: 250px; }
+        #maison-pro { right: 5%; bottom: 20%; width: 250px; }
+        
+        .maison-visible {
+            opacity: 1;
+            pointer-events: auto;
+            transition: opacity 1s ease-in-out; /* Fait apparaître en douceur */
+        }
+    
     </style>
 </head>
 <body>
@@ -338,6 +357,11 @@
 
     <script>
         const video = document.getElementById('video-fond');
+
+const maisonPrivee = document.getElementById('maison-privee');
+        const maisonPublique = document.getElementById('maison-publique');
+        const maisonPro = document.getElementById('maison-pro');
+        
         const selecteurLangue = document.querySelector('.selecteur-langue');
         let pauseEffectuee = false;
 
