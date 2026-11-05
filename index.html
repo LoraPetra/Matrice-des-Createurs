@@ -420,21 +420,12 @@ let pauseFinale = false;
                 video.pause();
                 pauseEffectuee = true;
             }
-            
-            if (video.currentTime >= 21 && !pauseFinale) {
+    setTimeout(function() {
                 video.pause();
-                pauseFinale = true;
-            }
+            }, 21000);                
         });
-        
-video.addEventListener('timeupdate', function() {
-            if (video.currentTime >= 5 && !pauseEffectuee) {
-                video.pause();
-                pauseEffectuee = true;
-            }
-        });
-
-       selecteurLangue.addEventListener('change', function() {
+          
+ selecteurLangue.addEventListener('change', function() {
             if (this.value !== "") {
                 texteSecondaire.innerText = dictionnaireNeo[this.value];
                 textePrincipal.style.display = "none";
