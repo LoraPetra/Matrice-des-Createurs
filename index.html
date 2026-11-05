@@ -433,6 +433,30 @@ let audioNeo = new Audio('NEOvoix1.mp3');
                 audioNeo.playbackRate = 1.15;
                 audioNeo.play();
 
+setTimeout(function() {
+                    let audioNeo2 = new Audio('VoixNEO.2.mp3');
+                    audioNeo2.volume = 0.5;
+                    audioNeo2.playbackRate = 1.15;
+                    
+                    let audioNeo3 = new Audio('VoixNEO.3.mp3');
+                    audioNeo3.volume = 0.5;
+                    audioNeo3.playbackRate = 1.15;
+                    
+                    let audioNeo4 = new Audio('VoixNEO.4.mp3');
+                    audioNeo4.volume = 0.5;
+                    audioNeo4.playbackRate = 1.15;
+
+                    audioNeo2.play();
+
+                    audioNeo2.onended = function() {
+                        audioNeo3.play();
+                    };
+                    
+                    audioNeo3.onended = function() {
+                        audioNeo4.play();
+                    };
+                }, 14000);
+                
             }
         });
 
