@@ -442,7 +442,15 @@
                 audioNeo.volume = 0.5;
                 audioNeo.playbackRate = 1.15;
                 audioNeo.play();
-                
+                // ÉTAPE 1 : EFFACEMENT DU CADRE DES LANGUES À 13 SECONDES
+                setTimeout(function() {
+                    selecteurLangue.style.display = "none";
+                }, 13000);
+
+                // ÉTAPE 2 : EFFACEMENT DU PETIT TEXTE À 15 SECONDES
+                setTimeout(function() {
+                    texteSecondaire.style.display = "none";
+                }, 15000);
 
 // APPARITION DES MAISONS UNE PAR UNE À 11 SECONDES
                 const videoMaisonPrivee = document.getElementById('video-maison-privee');
