@@ -231,10 +231,20 @@
             pointer-events: none; 
             z-index: 10;
         }
-        #video-maison-privee, #maison-privee { right: 5%; top: 15%; width: 180px; cursor: pointer; }
-        #video-maison-publique, #maison-publique { right: 5%; top: 42%; width: 180px; cursor: pointer; }
-        #video-maison-pro, #maison-pro { right: 5%; top: 69%; width: 180px; cursor: pointer; }
-        
+       #video-maison-privee, #maison-privee { right: 5%; top: 15%; width: 180px; cursor: none; }
+        #video-maison-publique, #maison-publique { right: 5%; top: 42%; width: 180px; cursor: none; }
+        #video-maison-pro, #maison-pro { right: 5%; top: 69%; width: 180px; cursor: none; }
+
+        /* --- LE CURSEUR PETIT BONHOMME NÉO --- */
+        #curseur-neo {
+            position: fixed;
+            width: 55px;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-15%, -15%);
+            mix-blend-mode: screen;
+            display: none;
+        }
         .maison-visible {
             opacity: 1;
             pointer-events: auto;
@@ -329,6 +339,9 @@
 
         <video src="présenvideo.maison3.mp4" muted playsinline class="maison-animee" id="video-maison-pro"></video>
         <img src="imagemaison3.jpg" class="maison-animee" id="maison-pro">
+
+        <!-- LE CURSEUR PETIT BONHOMME NÉO -->
+        <img src="curseurNeo2.jpg" id="curseur-neo">
         
         <!-- Le grand texte qui disparaît -->
         <p class="texte-neo-centre" id="texte-principal">"Bonjour, je suis Néo. Clique ici pour avoir accès à la gratuité cette semaine de tout ce que je peux te proposer pour reprendre le contrôle sur ta vie privée et professionnelle. Freedom."</p>
@@ -511,6 +524,26 @@
                 
             }
         });
+
+// --- MOTEUR DU CURSEUR PETIT BONHOMME NÉO ---
+        const curseurNeo = document.getElementById('curseur-neo');
+        const zonesMaisons = document.querySelectorAll('#video-maison-privee, #maison-privee, #video-maison-publique, #maison-publique, #video-maison-pro, #maison-pro');
+
+        document.addEventListener('mousemove', function(e) {
+            curseurNeo.style.left = e.clientX + 'px';
+            curseurNeo.style.top = e.clientY + 'px';
+        });
+
+        zonesMaisons.forEach(function(element) {
+            element.addEventListener('mouseenter', function() {
+                curseurNeo.style.display = 'block';
+            });
+            element.addEventListener('mouseleave', function() {
+                curseurNeo.style.display = 'none';
+            });
+        });
+        
+
     </script>
 </body>
 </html>
