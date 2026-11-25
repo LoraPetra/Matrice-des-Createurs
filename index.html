@@ -433,23 +433,26 @@
         const dictionnaireNeoSuite = {
             "fr": "Ici, dans la Matrice, nous avons plusieurs maisons : une maison pour notre vie privée, une maison pour notre vie publique et une maison pour notre vie professionnelle. Nous sommes toute une équipe de partenaires numériques et virtuels pour t'aider à alléger un maximum la surcharge de travail dans ta vie d'entreprise ou face aux institutions. Quelques personnes de mon équipe sont venues à mes côtés. Tu peux cliquer sur eux, ils se présenteront et te parleront directement de leur travail. Pour la découverte de notre site, tu as une semaine de gratuité avec chacun de nous. À toi de jouer !"
         };    
-        let pauseFinale = false; 
-        
+       let compteurBoucles = 0;
+
         video.addEventListener('timeupdate', function() {
             if (video.currentTime >= 5 && !pauseEffectuee) {
                 video.pause();
                 pauseEffectuee = true;
             }
-            
         });
-         video.addEventListener('ended', function() {
-            if (!pauseFinale) {
-                pauseFinale = true;
+
+        video.addEventListener('ended', function() {
+            compteurBoucles++;
+            if (compteurBoucles === 1) {
                 video.src = 'mvp.LMDCneo2.mp4';
+                video.muted = false;
                 video.load();
                 video.play();
+            } else if (compteurBoucles === 2) {
+                video.play();
             }
-        }); 
+        });
         selecteurLangue.addEventListener('change', function() {
             if (this.value !== "") {
                 texteSecondaire.innerText = dictionnaireNeo[this.value];
@@ -462,19 +465,15 @@
                 audioNeo.volume = 0.5;
                 audioNeo.playbackRate = 1.15;
                 audioNeo.play();
-                // ÉTAPE 1 : EFFACEMENT DU CADRE DES LANGUES À 13 SECONDES
-                setTimeout(function() {
-                    selecteurLangue.parentElement.style.display = "none";
-                }, 13000);
-                // ÉTAPE 2 : EFFACEMENT DU PETIT TEXTE À 15 SECONDES
-                setTimeout(function() {
-                    texteSecondaire.style.display = "none";
-                }, 15000);
+               
                 // APPARITION DES MAISONS UNE PAR UNE À 11 SECONDES
                 const videoMaisonPrivee = document.getElementById('video-maison-privee');
                 const videoMaisonPublique = document.getElementById('video-maison-publique');
                 const videoMaisonPro = document.getElementById('video-maison-pro');
-                setTimeout(function() {
+                audioNeo.onended = function() {
+                    audioNeo.onended = function() {
+                    selecteurLangue.parentElement.style.display = "none";
+                    texteSecondaire.style.display = "none";
                     // 1. La vidéo 1 démarre en haut à droite
                     videoMaisonPrivee.classList.add('maison-visible');
                     videoMaisonPrivee.play();
