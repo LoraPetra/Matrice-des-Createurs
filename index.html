@@ -440,12 +440,16 @@
                 video.pause();
                 pauseEffectuee = true;
             }
-             setTimeout(function() {
-                video.pause();
-                video.currentTime = 1;
-            }, 19000);         
+            
         });
-          
+         video.addEventListener('ended', function() {
+            if (!pauseFinale) {
+                pauseFinale = true;
+                video.src = 'mvp.LMDCneo2.mp4';
+                video.load();
+                video.play();
+            }
+        }); 
         selecteurLangue.addEventListener('change', function() {
             if (this.value !== "") {
                 texteSecondaire.innerText = dictionnaireNeo[this.value];
