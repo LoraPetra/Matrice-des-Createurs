@@ -258,7 +258,7 @@
     </style>
 </head>
 <body>
-    <video id="video-fond" autoplay loop muted playsinline class="background-video">
+    <video id="video-fond" autoplay muted playsinline class="background-video">
         <source src="MvpLMDC1.mp4" type="video/mp4">
     </video>
     
@@ -440,10 +440,10 @@
                 video.pause();
                 pauseEffectuee = true;
             }
-            setTimeout(function() {
+             setTimeout(function() {
                 video.pause();
                 video.currentTime = 1;
-            }, 19000);                
+            }, 19000);         
         });
           
         selecteurLangue.addEventListener('change', function() {
