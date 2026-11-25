@@ -261,7 +261,8 @@
     <video id="video-fond" autoplay muted playsinline class="background-video">
         <source src="MvpLMDC1.mp4" type="video/mp4">
     </video>
-    
+
+    <img id="image-fond-finale" src="mvp.LMDCneo3.jpg" class="background-video" style="display: none;">
     <div class="interface">
         <h1 class="titre-intro">Bienvenue dans La Matrice des Créateurs.</h1>
         <!-- LE NOUVEAU MENU DES LANGUES (65 Langues validées) -->
@@ -451,6 +452,9 @@
                 video.play();
             } else if (compteurBoucles === 2) {
                 video.play();
+            } else if (compteurBoucles === 3) {
+                video.style.display = "none";
+                document.getElementById('image-fond-finale').style.display = "block";
             }
         });
         selecteurLangue.addEventListener('change', function() {
@@ -463,7 +467,7 @@
                 
                 let audioNeo = new Audio('NEOvoix1.mp3');
                 audioNeo.volume = 0.5;
-                audioNeo.playbackRate = 1.15;
+                audioNeo.playbackRate = 1.10;
                 audioNeo.play();
                
                 // APPARITION DES MAISONS UNE PAR UNE À 11 SECONDES
@@ -496,9 +500,7 @@
                         videoMaisonPro.classList.remove('maison-visible');
                         maisonPro.classList.add('maison-visible');
                     };
-                }, 11000);
                 
-                setTimeout(function() {
                     let audioNeo2 = new Audio('VoixNEO.2.mp3');
                     audioNeo2.volume = 0.5;
                     audioNeo2.playbackRate = 1.10;
@@ -518,7 +520,7 @@
                     audioNeo3.onended = function() {
                         audioNeo4.play();
                     };
-                }, 11000);
+                };
                 
             }
         });
