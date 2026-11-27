@@ -174,8 +174,9 @@
         #fenetre-capture {
             position: absolute;
             top: 50%;
-            right: 5%;
-            transform: translateY(-50%);
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: auto;
             width: 350px;
             max-width: 90%;
             background-color: rgba(0, 0, 0, 0.85);
@@ -235,6 +236,11 @@
         #video-maison-publique, #maison-publique { right: 5%; top: 42%; width: 180px; cursor: none; }
         #video-maison-pro, #maison-pro { right: 5%; top: 69%; width: 180px; cursor: none; }
 
+        /* --- DESIGN DES AGENTS À GAUCHE --- */
+        #video-thierry, #agent-thierry { left: 5%; top: 8%; height: 22vh; width: auto; cursor: none; }
+        #video-bluepop, #agent-bluepop { left: 5%; top: 41%; height: 22vh; width: auto; cursor: none; }
+        #video-frtravail, #agent-frtravail { left: 5%; top: 74%; height: 22vh; width: auto; cursor: none; }
+        
         /* --- LE CURSEUR PETIT BONHOMME NÉO --- */
        #curseur-neo {
             position: fixed;
@@ -343,6 +349,14 @@
         <img src="imagemaison2.jpg" class="maison-animee" id="maison-publique">
         <video src="présenvideo.maison3.mp4" muted playsinline class="maison-animee" id="video-maison-pro"></video>
         <img src="imagemaison3.jpg" class="maison-animee" id="maison-pro">
+
+        <!-- LES TROIS AGENTS À GAUCHE -->
+        <video src="IntegrationThirri.mp4" muted playsinline class="maison-animee" id="video-thierry"></video>
+        <img src="T.Comptable.jpg" class="maison-animee" id="agent-thierry">
+        <video src="integrationB.bluepop.mp4" muted playsinline class="maison-animee" id="video-bluepop"></video>
+        <img src="B.bluepop.final.jpg" class="maison-animee" id="agent-bluepop">
+        <video src="integrationMr.frTravail.mp4" muted playsinline class="maison-animee" id="video-frtravail"></video>
+        <img src="Mr.frTravai.jpg" class="maison-animee" id="agent-frtravail">
         
         <!-- LE CURSEUR PETIT BONHOMME NÉO -->
         <img src="curseurNeo2.jpg" id="curseur-neo">
@@ -352,6 +366,19 @@
         
         <!-- Le petit texte qui revient à 12s -->
         <p class="texte-neo-discret" id="texte-secondaire">"Bonjour, je suis Néo. Clique ici pour avoir accès à la gratuité cette semaine de tout ce que je peux te proposer pour reprendre le contrôle sur ta vie privée et professionnelle. Freedom."</p>
+
+        <!-- LE FORMULAIRE DE CAPTURE (Opt-in) -->
+        <div id="fenetre-capture">
+            <span id="fermer-capture" style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-weight: bold; font-size: 1.2rem;">X</span>
+            <h2 id="optin-titre">Accédez à votre espace</h2>
+            <input type="text" id="optin-prenom" placeholder="Votre prénom">
+            <input type="email" id="optin-email" placeholder="Votre email">
+            <div class="case-rgpd">
+                <input type="checkbox" id="accord-rgpd">
+                <label for="accord-rgpd" id="optin-texte-rgpd">J'accepte de recevoir des emails de Néo.</label>
+            </div>
+            <button id="bouton-valider" class="bouton-acces" style="opacity: 1; animation: none;">Valider</button>
+        </div>
           
     </div>
     <script>
@@ -480,7 +507,40 @@
                     // 1. La vidéo 1 démarre en haut à droite
                     videoMaisonPrivee.classList.add('maison-visible');
                     videoMaisonPrivee.play();
-                    // Quand la vidéo 1 est finie : image 1 collée + vidéo 2 démarre au milieu
+
+                    // APPARITION DES AGENTS À GAUCHE (DÉCALAGE DE 2,5 SECONDES)
+                    setTimeout(function() {
+                        const videoThierry = document.getElementById('video-thierry');
+                        const agentThierry = document.getElementById('agent-thierry');
+                        const videoBluepop = document.getElementById('video-bluepop');
+                        const agentBluepop = document.getElementById('agent-bluepop');
+                        const videoFrtravail = document.getElementById('video-frtravail');
+                        const agentFrtravail = document.getElementById('agent-frtravail');
+
+                        videoThierry.classList.add('maison-visible');
+                        videoThierry.play();
+
+                        videoThierry.onended = function() {
+                            videoThierry.classList.remove('maison-visible');
+                            agentThierry.classList.add('maison-visible');
+                            videoBluepop.classList.add('maison-visible');
+                            videoBluepop.play();
+                        };
+
+                        videoBluepop.onended = function() {
+                            videoBluepop.classList.remove('maison-visible');
+                            agentBluepop.classList.add('maison-visible');
+                            videoFrtravail.classList.add('maison-visible');
+                            videoFrtravail.play();
+                        };
+
+                        videoFrtravail.onended = function() {
+                            videoFrtravail.classList.remove('maison-visible');
+                            agentFrtravail.classList.add('maison-visible');
+                        };
+                    }, 2500);
+
+   // Quand la vidéo 1 est finie : image 1 collée + vidéo 2 démarre au milieu
                     videoMaisonPrivee.onended = function() {
                         videoMaisonPrivee.classList.remove('maison-visible');
                         maisonPrivee.classList.add('maison-visible');
@@ -526,7 +586,7 @@
 
         // --- MOTEUR DU CURSEUR PETIT BONHOMME NÉO ---
         const curseurNeo = document.getElementById('curseur-neo');
-        const zonesMaisons = document.querySelectorAll('#video-maison-privee, #maison-privee, #video-maison-publique, #maison-publique, #video-maison-pro, #maison-pro');
+        const zonesMaisons = document.querySelectorAll('#video-maison-privee, #maison-privee, #video-maison-publique, #maison-publique, #video-maison-pro, #maison-pro, #video-thierry, #agent-thierry, #video-bluepop, #agent-bluepop, #video-frtravail, #agent-frtravail');
         
         document.addEventListener('mousemove', function(e) {
             curseurNeo.style.left = e.clientX + 'px';
@@ -541,6 +601,23 @@
                 curseurNeo.style.display = 'none';
             });
         });
+
+        // --- OUVERTURE DU FORMULAIRE AU CLIC SUR LES MAISONS ET LES AGENTS ---
+        const fenetreCapture = document.getElementById('fenetre-capture');
+        const fermerCapture = document.getElementById('fermer-capture');
+
+        zonesMaisons.forEach(function(element) {
+            element.addEventListener('click', function() {
+                fenetreCapture.classList.add('optin-visible');
+                curseurNeo.style.display = 'none';
+            });
+        });
+
+        fermerCapture.addEventListener('click', function() {
+            fenetreCapture.classList.remove('optin-visible');
+        });
+
+        
     </script>
 </body>
 </html>
