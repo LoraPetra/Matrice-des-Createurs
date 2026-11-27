@@ -240,6 +240,8 @@
         #video-thierry, #agent-thierry { left: 5%; top: 8%; height: 22vh; width: auto; cursor: none; }
         #video-bluepop, #agent-bluepop { left: 5%; top: 41%; height: 22vh; width: auto; cursor: none; }
         #video-frtravail, #agent-frtravail { left: 5%; top: 74%; height: 22vh; width: auto; cursor: none; }
+        #video-caf, #agent-caf { left: 14%; top: 74%; height: 22vh; width: auto; cursor: none; }
+
         
         /* --- LE CURSEUR PETIT BONHOMME NÉO --- */
        #curseur-neo {
@@ -357,6 +359,8 @@
         <img src="B.bluepop.final.jpg" class="maison-animee" id="agent-bluepop">
         <video src="integrationMr.frTravail.mp4" muted playsinline class="maison-animee" id="video-frtravail"></video>
         <img src="Mr.frTravai.jpg" class="maison-animee" id="agent-frtravail">
+        <video src="integrationMr.Caf.mp4" muted playsinline class="maison-animee" id="video-caf"></video>
+        <img src="MisterCaf.jpg" class="maison-animee" id="agent-caf">
         
         <!-- LE CURSEUR PETIT BONHOMME NÉO -->
         <img src="curseurNeo2.jpg" id="curseur-neo">
@@ -537,6 +541,17 @@
                         videoFrtravail.onended = function() {
                             videoFrtravail.classList.remove('maison-visible');
                             agentFrtravail.classList.add('maison-visible');
+
+                           const videoCaf = document.getElementById('video-caf');
+                            const agentCaf = document.getElementById('agent-caf');
+                            videoCaf.classList.add('maison-visible');
+                            videoCaf.play();
+
+                            videoCaf.onended = function() {
+                                videoCaf.classList.remove('maison-visible');
+                                agentCaf.classList.add('maison-visible');
+                            };
+
                         };
                     }, 2500);
 
@@ -586,7 +601,7 @@
 
         // --- MOTEUR DU CURSEUR PETIT BONHOMME NÉO ---
         const curseurNeo = document.getElementById('curseur-neo');
-        const zonesMaisons = document.querySelectorAll('#video-maison-privee, #maison-privee, #video-maison-publique, #maison-publique, #video-maison-pro, #maison-pro, #video-thierry, #agent-thierry, #video-bluepop, #agent-bluepop, #video-frtravail, #agent-frtravail');
+        const zonesMaisons = document.querySelectorAll('#video-maison-privee, #maison-privee, #video-maison-publique, #maison-publique, #video-maison-pro, #maison-pro, #video-thierry, #agent-thierry, #video-bluepop, #agent-bluepop, #video-frtravail, #agent-frtravail, #video-caf, #agent-caf');
         
         document.addEventListener('mousemove', function(e) {
             curseurNeo.style.left = e.clientX + 'px';
